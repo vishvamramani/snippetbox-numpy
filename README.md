@@ -1,93 +1,148 @@
-NumPy SnippetBox 🚀
 
-Smart, ultra-fast NumPy autocomplete and snippets for Python in VS Code.
-Automatically detects your NumPy import alias (np, numpy, or custom) and provides context-aware suggestions without slowing down the editor.
+# NumPy SnippetBox
 
-📦 Features
+Smart, ultra-fast NumPy snippets for Python. Automatically detects your NumPy alias (np, numpy, or custom) and provides accurate, context-aware suggestions without slowing down VS Code.
 
-🔍 Automatic NumPy alias detection (np, numpy, or custom)
+⚡ Short & Punchy
 
-⚡ Ultra-fast method suggestions
+Ultra-fast NumPy snippets for Python with automatic alias detection. Works instantly with np, numpy, or any custom alias.
 
-🧠 Smart filtering while typing (np.z → zeros)
+🧠 Technical
 
-❌ No suggestions inside import statements
+A lightweight VS Code extension that uses AST-based analysis to detect NumPy imports and deliver real-time, alias-aware snippets with zero editor lag.
 
-🧩 Works efficiently with large Python files
+🚀 Marketing Style
 
-🚫 Zero editor slowdown
+Boost your Python productivity with smart NumPy snippets. Alias-aware, fast, and optimized for large files—no configuration required.
 
-📖 Usage
 
-Import NumPy in your Python file:
 
+
+
+## Documentation
+
+NumPy SnippetBox is a high-performance VS Code extension for Python that delivers intelligent, alias-aware NumPy autocomplete and snippets.
+The extension automatically detects NumPy import aliases using AST parsing with a regex-based fallback, ensuring accuracy without impacting editor performance.
+
+This document describes the internal architecture, detection logic, and performance considerations for developers maintaining or extending the extension.
+
+---
+Core Design Goals
+
+ - ⚡ Ultra-fast autocomplete and snippet suggestions
+
+ - 🎯 Accurate NumPy alias detection
+
+ - 🧠 Zero false positives from comments or strings
+
+ - 🚫 No performance degradation in VS Code
+
+ - 🧩 Scalable for large Python files and workspaces
+
+```
 import numpy as np
-
-
-or
-
+import numpy
 import numpy as numpy_lib
+from numpy import array
+from numpy import zeros as z
+
+ ```
+
+ Alias Detection Architecture
+1. AST-Based Analysis (Primary Mechanism)
+* Python source files are parsed into an Abstract Syntax Tree (AST).
+* The extension traverses only relevant nodes:
+
+* ``` Import ```
+
+* ``` ImportFrom ```
+
+* This approach allows the extension to:
+
+* Reliably detect NumPy imports
+
+* Extract alias names (np, numpy, custom aliases)
+
+* Ignore comments, strings, and unrelated code
+
+Why AST?
+* AST parsing provides syntax-level accuracy and eliminates false positives common in text-based scanning.
+
+---
+
+2. Regex-Based Detection (Fallback)
+
+* A lightweight, precompiled regex is used as a fallback mechanism.
+
+* Regex execution is:
+
+    - Scoped strictly to import lines
+
+    - Triggered only during rapid typing or partial document states
+
+* Ensures real-time responsiveness when AST parsing is temporarily deferred.
+
+This hybrid model balances correctness and speed.
+
+### Snippet Resolution Logic
+
+* Snippets are triggered only after a detected NumPy alias
+
+* Suggestions are suppressed inside import statements
+
+* Snippet prefixes are dynamically rewritten using the detected alias
+
+Example:
+
+```
+np.z  →  np.zeros()
+
+```
 
 
-Start typing a NumPy method:
+## 📦 Extension Information
+- Extension Name: ```snippetbox-numpy```
 
-np.a
+- Display Name:``` NumPy SnippetBox ```
 
+- Extension ID: ```snippetbox-numpy```
 
-Instantly get relevant suggestions:
+- Language Support: ```Python```
 
-np.array()
-np.arange()
+- Platform: ```Visual Studio Code```
 
+## 🌐 Open Source
 
-The extension automatically adapts to the alias you are using.
+NumPy SnippetBox is fully open source and available under the MIT License.
+You are welcome to:
 
-🧠 Technical Overview
+- Inspect the source code
 
-Alias Detection: Uses AST (Abstract Syntax Tree) parsing for accurate detection of NumPy imports and aliases.
+- Contribute features or bug fixes
 
-Fallback Mechanism: Lightweight, scoped regex scanning for rapid typing or partial imports.
+- Fork the project for personal use
 
-Performance Optimizations: Debounced analysis, per-document caching, runs only for Python files, and non-blocking execution to ensure smooth editor performance.
-
-Snippet Resolution: Only triggers after a valid NumPy alias; dynamically adapts to alias changes.
-
-👨‍💻 Developer Information
-
-Extension Name: snippetbox-numpy
-
-Display Name: NumPy SnippetBox
-
-Extension ID: snippetbox-numpy
-
-Language Support: Python
-
-Developed & Managed By: Vishvam Ramani
-
-GitHub: https://github.com/vishvamramani/snippetbox-numpy
-
-🌐 Open Source
-
-NumPy SnippetBox is open source under the MIT License.
-Contributions, feature requests, and issues are welcome!
-
-License: MIT License
+- Submit issues or feature requests
 
 
-⚡ Performance & Compatibility
+GitHub Repository: https://github.com/vishvamramani/snippetbox-numpy
 
-✅ Python files (.py) only
+## About the Developer
+Vishvam Ramani is a software developer focused on building high-performance, developer-friendly VS Code extensions for Python and productivity tools. His work emphasizes:
 
-✅ Large codebases
+* ⚡ Speed and real-time performance
 
-✅ Multi-root workspaces
+* 🧠 Intelligent code analysis using AST and Regex
 
-❌ No configuration required
+* 🧩 Scalability for large codebases
 
-🛠 Troubleshooting
+* 📦 Maintainability and clean architecture
 
-Ensure NumPy is imported in the file
+#### Contributions & Support:
+* Issues, feature requests, and pull requests are welcome.
 
-Start typing using the detected alias (e.g., np.)
+* Codebase follows modular design for easy extensions and long-term maintenance.
 
-Cursor should not be inside an import statement
+Developed & Managed By: Vishvam Ramani 
+ 
+GitHub: [Vishvam Ramani](https://github.com/vishvamramani)
